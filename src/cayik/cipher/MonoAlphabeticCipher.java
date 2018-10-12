@@ -33,12 +33,8 @@ public class MonoAlphabeticCipher implements Cipher{
 	 * 
 	 * @param secretAlphabet a string with contains the alphabet from the user
 	 */
-	protected void setSecretAlphabet(String secretAlphabet) {
-		try {
-			this.secretAlphabet= checkSecret(secretAlphabet);
-		} catch (MyException e) {
-			System.out.println(e.toString());
-		}
+	protected void setSecretAlphabet(String secretAlphabet) throws MyException {
+		this.secretAlphabet= checkSecret(secretAlphabet);
 	}
 	
 	/* This method is from the interface cipher and we use it to encrypt 
