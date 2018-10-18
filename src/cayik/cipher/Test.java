@@ -23,7 +23,7 @@ public class Test {
 		}
 		
 		try {
-			ShiftCipher s1= new ShiftCipher(3); 
+			ShiftCipher s1= new ShiftCipher(-3); 
 			System.out.println("Shift-Cipher:");
 			
 			System.out.println("enc: \t");
@@ -31,8 +31,8 @@ public class Test {
 				System.out.println(test);
 			System.out.println("dec: \t");
 				System.out.println(s1.decrypt(test));
-		}catch(MyException d) {
-			System.out.println(d.toString());
+		}catch(MyException e) {
+			System.out.println(e.toString());
 		}
 	}
 }
