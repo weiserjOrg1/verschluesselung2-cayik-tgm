@@ -1,6 +1,9 @@
 package cayik.cipher;
 
 public class ShiftCipher extends MonoAlphabeticCipher{
+	public ShiftCipher() {
+		super();
+	}
 	
 	public ShiftCipher(int value) throws MyException {
 		this.setShiftValue(value);

@@ -9,10 +9,10 @@ import javax.swing.*;
 public class View extends JFrame{
 	//private MonoAlphabeticCipher m1; 
 	
-	private JTextField shift; 
-	private JTextField sub; 
-	private JTextField in;
-	private JTextField out;
+	private JTextField shiftField; 
+	private JTextField subField; 
+	private JTextField inField;
+	private JTextField outField;
 	
 	private JLabel subVerschl;
 	private JLabel shiftVerschl;
@@ -29,8 +29,8 @@ public class View extends JFrame{
 	
 	private JPanel selbox;
 	private JPanel alphbox;
-	private JPanel settingsbox;
-	private JPanel inout; 
+	private JPanel enDePanel; 
+	private JPanel inOutPanel;
 	
 	private Controll c1;
 	private Model m1; 
@@ -42,10 +42,11 @@ public class View extends JFrame{
 		this.setTitle("Verschlüsselung");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout()); 
+		this.setSize(1000, 1000);
 		
 		//Buttons:
-		this.subAuswahl= new JRadioButton("Sub");
-		this.shiftAuswahl= new JRadioButton("Shift", true);
+		this.subAuswahl= new JRadioButton("Sub",true);
+		this.shiftAuswahl= new JRadioButton("Shift");
 		
 		this.subAuswahl.addActionListener((ActionListener) this.c1);
 		this.subAuswahl.addFocusListener((FocusListener) this.c1);
@@ -63,22 +64,23 @@ public class View extends JFrame{
 		this.buttonRes.addActionListener((ActionListener) this.c1);
 		
 		this.buttonEnc= new JButton("Encrypt");
+		this.buttonEnc.addActionListener((ActionListener)this.c1);
 		this.buttonDec= new JButton("Decrypt");
-		
-		
+		this.buttonDec.addActionListener((ActionListener)this.c1);
 		
 		//Panels
 		this.selbox= new JPanel(); 
-		this.add(this.selbox, BorderLayout.WEST);
+		this.add(this.selbox, BorderLayout.NORTH);
 		
 		this.alphbox= new JPanel(); 
 		this.add(this.alphbox, BorderLayout.CENTER);
 		
-		this.settingsbox= new JPanel(); 
-		this.add(this.settingsbox, BorderLayout.EAST); 
 		
-		this.inout=new JPanel(); 
-		this.add(this.inout, BorderLayout.SOUTH);
+		this.inOutPanel=new JPanel(); 
+		this.add(this.inOutPanel, BorderLayout.SOUTH);
+		
+		this.enDePanel=new JPanel();
+		this.add(this.enDePanel, BorderLayout.WEST);
 		
 		//Selection-Box
 		this.selbox.add(this.subAuswahl);
@@ -87,26 +89,118 @@ public class View extends JFrame{
 		//Alphabet-Selection-Box
 		this.subVerschl= new JLabel("Substitution:"); 
 		this.shiftVerschl= new JLabel ("Shift:");
-		this.shift= new JTextField();
-		this.sub=new JTextField(); 
+		this.shiftField= new JTextField();
+		this.subField=new JTextField(); 
 		
 		this.alphbox.setLayout(new GridLayout(3,2));
 		this.alphbox.add(this.subVerschl);
-		this.alphbox.add(this.shift);
+		this.alphbox.add(this.subField);
 		
 		this.alphbox.add(this.shiftVerschl);
-		this.alphbox.add(this.shift);
+		this.alphbox.add(this.shiftField);
 		
 		this.alphbox.add(this.buttonApl);
 		this.alphbox.add(this.buttonRes);
 		
-		//Settings-Box
-		this.settingsbox.add(this.buttonEnc); 
-		this.settingsbox.add(this.buttonDec);
 		
+		//In-Box
+		this.input=new JLabel("Input: ");
+		this.inField=new JTextField(); 
+		this.inOutPanel.setLayout(new GridLayout(1,4));
+		this.inOutPanel.add(this.input);
+		this.inOutPanel.add(this.inField); 
 		
+		this.output=new JLabel("Output: "); 
+		this.outField= new JTextField();
+		this.inOutPanel.add(this.output);
+		this.inOutPanel.add(this.outField);
+		this.outField.setEditable(false);
 		
+		//EnDec-Box
+		this.enDePanel.setLayout(new GridLayout(1,2));
+		this.enDePanel.add(this.buttonEnc);
+		this.enDePanel.add(this.buttonDec);
+		
+		this.setVisible(true);		
 		
 	}
 	
+	public boolean isSubSel() {
+		boolean sel;
+		if(this.subAuswahl.isSelected()) {
+			sel=true;
+		} else {
+			sel=false;
+		}
+		return sel;
+	}
+	
+	public boolean isSub(Object o) {
+		if(o==this.subAuswahl) return true; 
+		return false; 
+	}
+	
+	public boolean isShiftSel() {
+		boolean sel;
+		if(this.shiftAuswahl.isSelected()) {
+			sel=true;
+		} else {
+			sel=false;
+		}
+		return sel;
+	}
+	
+	public boolean isShift(Object o) {
+		if(o==this.shiftAuswahl) return true; 
+		return false; 
+	}
+	
+	public String getSubField() {
+		return this.subField.getText();
+	}
+	
+	public String getShiftField() {
+		return this.shiftField.getText();
+	}
+	
+	public String getIn() {
+		return this.inField.getText();
+	}
+	
+	public void setOutput(String output) {
+		this.outField.setText(output);
+	}
+	
+	public boolean isButtonApl(Object o) {
+		if(o==this.buttonApl) return true;
+		return false;
+	}
+	
+	public boolean isButtonRes(Object o) {
+		if(o==this.buttonRes) return true;
+		return false;
+	}
+	
+	public boolean isButtonEnc(Object o) {
+		if(o==this.buttonEnc) return true;
+		return false;
+	}
+	
+	public boolean isButtonDec(Object o) {
+		if(o==this.buttonDec) return true;
+		return false;
+	}
+	
+	// changeLayout
+	public void changeSubShi(int value) {
+		if(value == Model.SHIFT) {
+			this.shiftField.setEditable(true);
+			this.subField.setEditable(false);
+			this.m1.setMode(Model.SHIFT);
+		} else {
+			this.subField.setEditable(true);
+			this.shiftField.setEditable(false);
+			this.m1.setMode(Model.SUB);
+		}
+	}
 }

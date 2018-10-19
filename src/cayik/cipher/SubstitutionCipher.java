@@ -8,6 +8,10 @@ package cayik.cipher;
  */
 public class SubstitutionCipher extends MonoAlphabeticCipher{
 	
+	public SubstitutionCipher() {
+		super();
+	}
+	
 	public SubstitutionCipher(String secretAlphabet) throws MyException{
 		super.setSecretAlphabet(secretAlphabet);
 		
